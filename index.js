@@ -10,15 +10,6 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-// const brands = [
-//   { name: "Toyota", image: "https://i.ibb.co/55DG6sn/OlRQFW.jpg" },
-//   { name: "Ford", image: "https://i.ibb.co/55DG6sn/OlRQFW.jpg" },
-//   { name: "BMW", image: "https://i.ibb.co/55DG6sn/OlRQFW.jpg" },
-//   { name: "Mercedes-Benz", image: "https://i.ibb.co/55DG6sn/OlRQFW.jpg" },
-//   { name: "Tesla", image: "https://i.ibb.co/55DG6sn/OlRQFW.jpg" },
-//   { name: "Honda", image: "https://i.ibb.co/55DG6sn/OlRQFW.jpg" },
-// ];
-
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.ygecibd.mongodb.net/?retryWrites=true&w=majority`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -36,11 +27,18 @@ async function run() {
     await client.connect();
 
     const database = client.db("automotiveDB");
-    const brandsCollection = database.collection("brands");
+    const brandsCollection = database.collection("cars");
 
     app.get("/brands", async (req, res) => {
       const cursor = brandsCollection.find();
       const result = await cursor.toArray();
+      res.send(result);
+    });
+
+    app.post("/cars", async (req, res) => {
+      //   console.log(req.body);
+      const newCar = req.body;
+      const result = await brandsCollection.insertOne(newCar);
       res.send(result);
     });
 
