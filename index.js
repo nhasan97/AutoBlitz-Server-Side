@@ -52,6 +52,14 @@ async function run() {
       res.send(result);
     });
 
+    app.get("/car-features/:name", async (req, res) => {
+      const carsCollection = database.collection("carDetails");
+      const name = req.params.name;
+      const query = { name: name };
+      const result = await carsCollection.findOne(query);
+      res.send(result);
+    });
+
     app.post("/cars", async (req, res) => {
       const carsCollection = database.collection("cars");
       const newCar = req.body;
