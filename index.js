@@ -67,6 +67,13 @@ async function run() {
       res.send(result);
     });
 
+    app.post("/cart", async (req, res) => {
+      const cartCollection = database.collection("cart");
+      const loadedProductInCart = req.body;
+      const result = await cartCollection.insertOne(loadedProductInCart);
+      res.send(result);
+    });
+
     app.put("/all-cars/:id", async (req, res) => {
       const carsCollection = database.collection("cars");
       const id = req.params.id;
