@@ -27,18 +27,29 @@ async function run() {
     await client.connect();
 
     const database = client.db("automotiveDB");
-    const brandsCollection = database.collection("cars");
 
     app.get("/brands", async (req, res) => {
+      const brandsCollection = database.collection("brands");
       const cursor = brandsCollection.find();
       const result = await cursor.toArray();
       res.send(result);
     });
 
+    app.get("/cars/:brand_name", async (req, res) => {
+      const carsCollection = database.collection("cars");
+      const brandName = req.params.brand_name;
+      console.log(brandName);
+      const query = { brandName: brandName.toLowerCase() };
+      const cursor = carsCollection.find(query);
+      result = await cursor.toArray();
+      res.send(result);
+    });
+
     app.post("/cars", async (req, res) => {
       //   console.log(req.body);
+      const carsCollection = database.collection("cars");
       const newCar = req.body;
-      const result = await brandsCollection.insertOne(newCar);
+      const result = await carsCollection.insertOne(newCar);
       res.send(result);
     });
 
