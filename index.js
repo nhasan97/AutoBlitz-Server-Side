@@ -60,6 +60,21 @@ async function run() {
       res.send(result);
     });
 
+    app.get("/cart", async (req, res) => {
+      const cartCollection = database.collection("cart");
+      const cursor = cartCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+
+    app.delete("/cart/:id", async (req, res) => {
+      const cartCollection = database.collection("cart");
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await cartCollection.deleteOne(query);
+      res.send(result);
+    });
+
     app.post("/cars", async (req, res) => {
       const carsCollection = database.collection("cars");
       const newCar = req.body;
