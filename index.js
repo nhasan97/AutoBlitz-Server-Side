@@ -47,7 +47,6 @@ async function run() {
     app.get("/all-cars/:id", async (req, res) => {
       const carsCollection = database.collection("cars");
       const id = req.params.id;
-      console.log(id);
       const query = { _id: new ObjectId(id) };
       const result = await carsCollection.findOne(query);
       res.send(result);
@@ -57,6 +56,33 @@ async function run() {
       const carsCollection = database.collection("cars");
       const newCar = req.body;
       const result = await carsCollection.insertOne(newCar);
+      res.send(result);
+    });
+
+    app.put("/all-cars/:id", async (req, res) => {
+      const carsCollection = database.collection("cars");
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const updatedInfo = {
+        $set: {
+          name: req.body.name,
+          brandName: req.body.brandName,
+          type: req.body.type,
+          price: req.body.price,
+          description: req.body.description,
+          rating: req.body.rating,
+          imageUrl: req.body.imageUrl,
+        },
+      };
+
+      const option = { upsert: true };
+
+      const result = await carsCollection.updateOne(
+        filter,
+        updatedInfo,
+        option
+      );
+
       res.send(result);
     });
 
