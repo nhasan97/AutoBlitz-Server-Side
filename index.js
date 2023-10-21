@@ -58,7 +58,7 @@ async function run() {
       res.send(result);
     });
 
-    app.get("/car-features/:name", async (req, res) => {
+    app.get("/car-specs/:name", async (req, res) => {
       const carsCollection = database.collection("carDetails");
       const name = req.params.name;
       const query = { name: name };
@@ -91,6 +91,13 @@ async function run() {
       res.send(result);
     });
 
+    app.post("/car-details", async (req, res) => {
+      const carsDetailsCollection = database.collection("carDetails");
+      const specs = req.body;
+      const result = await carsDetailsCollection.insertOne(specs);
+      res.send(result);
+    });
+
     app.post("/cart", async (req, res) => {
       const cartCollection = database.collection("cart");
       const loadedProductInCart = req.body;
@@ -119,6 +126,38 @@ async function run() {
       const option = { upsert: true };
 
       const result = await carsCollection.updateOne(
+        filter,
+        updatedInfo,
+        option
+      );
+
+      res.send(result);
+    });
+
+    app.put("/car-specs/:name", async (req, res) => {
+      const carsDetailsCollection = database.collection("carDetails");
+      const name = req.params.name;
+      const filter = { name: name };
+      const updatedInfo = {
+        $set: {
+          name: req.body.name,
+          body: req.body.body,
+          seg: req.body.seg,
+          py: req.body.py,
+          eng: req.body.eng,
+          pow: req.body.pow,
+          fuel: req.body.fuel,
+          fuelc: req.body.fuelc,
+          ps: req.body.ps,
+          d: req.body.d,
+          ts: req.body.ts,
+          gw: req.body.gw,
+        },
+      };
+
+      const option = { upsert: true };
+
+      const result = await carsDetailsCollection.updateOne(
         filter,
         updatedInfo,
         option
