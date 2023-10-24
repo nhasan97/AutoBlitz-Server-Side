@@ -21,6 +21,10 @@ const client = new MongoClient(uri, {
   },
 });
 
+app.get("/", (req, res) => {
+  res.send("server started");
+});
+
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
@@ -29,10 +33,6 @@ async function run() {
     const database = client.db("automotiveDB");
 
     // ==================================== GETs ====================================
-
-    app.get("/", (req, res) => {
-      res.send("server started");
-    });
 
     app.get("/brands", async (req, res) => {
       const brandsCollection = database.collection("brands");
