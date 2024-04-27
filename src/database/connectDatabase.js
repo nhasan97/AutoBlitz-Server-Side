@@ -24,7 +24,7 @@ const client = new MongoClient(getDBUri(), {
 });
 
 const getDB = () => {
-  const database = client.db("marketplaceDB");
+  const database = client.db(process.env.DB_NAME);
   return database;
 };
 
