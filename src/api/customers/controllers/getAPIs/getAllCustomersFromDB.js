@@ -1,16 +1,14 @@
 const { getDB } = require("../../../../database/connectDatabase");
 
-const getCartItems = async (req, res) => {
+const getAllCustomersFromDB = async (req, res) => {
   try {
     // if (req.user.email !== req.query.email) {
     //   return res.status(403).send({ message: "Forbidden Access" });
     // }
     const database = getDB();
-    const cartCollection = database.collection("cart");
-    const query = {
-      user_email: req.params.email,
-    };
-    const cursor = cartCollection.find(query);
+    const brandsCollection = database.collection("users");
+    const query = { role: "customer" };
+    const cursor = brandsCollection.find(query);
     const result = await cursor.toArray();
     res.send(result);
   } catch (error) {
@@ -18,4 +16,4 @@ const getCartItems = async (req, res) => {
   }
 };
 
-module.exports = getCartItems;
+module.exports = getAllCustomersFromDB;

@@ -4,8 +4,12 @@ const getCarsByBrandFromDB = async (req, res) => {
   try {
     const database = getDB();
     const carsCollection = database.collection("cars");
-    const brandName = req.params.brand_name;
-    const query = { brandName: brandName.toLowerCase() };
+
+    let query = {};
+    if (req.query?.brandName) {
+      query = { brandName: req.query.brandName.toLowerCase() };
+    }
+
     const cursor = carsCollection.find(query);
     const result = await cursor.toArray();
     res.send(result);

@@ -7,6 +7,8 @@ const app = express();
 const port = 5000 || process.env.PORT;
 
 const authenticationRoutes = require("./src/routes/authentication/index");
+const usersRoutes = require("./src/routes/users/index");
+const customerRoutes = require("./src/routes/customer/index");
 const brandRoutes = require("./src/routes/brands/index");
 const carsRoutes = require("./src/routes/cars/index");
 const cartRoutes = require("./src/routes/cart/index");
@@ -16,6 +18,8 @@ const globalErrorHandler = require("./src/middleWares/globalErrorHandler");
 applyMiddleware(app);
 
 app.use(authenticationRoutes);
+app.use(usersRoutes);
+app.use(customerRoutes);
 app.use(brandRoutes);
 app.use(carsRoutes);
 app.use(cartRoutes);

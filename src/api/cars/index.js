@@ -6,6 +6,8 @@ const saveCarInDB = require("./controllers/postAPIs/saveCarInDB");
 const saveCarSpecsInDB = require("./controllers/postAPIs/saveCarSpecsInDB");
 const updateCarInfo = require("./controllers/putAPIs/updateCarInfo");
 const updateCarSpecs = require("./controllers/putAPIs/updateCarSpecs");
+const deleteCarDataFromDB = require("./controllers/deleteAPIs/deleteCarDataFromDB");
+const deleteCarSpecsFromDB = require("./controllers/deleteAPIs/deleteCarSpecsFromDB");
 
 module.exports = {
   getCarsByBrandFromDB,
@@ -16,4 +18,6 @@ module.exports = {
   saveCarSpecsInDB,
   updateCarInfo,
   updateCarSpecs,
+  deleteCarDataFromDB,
+  deleteCarSpecsFromDB,
 };

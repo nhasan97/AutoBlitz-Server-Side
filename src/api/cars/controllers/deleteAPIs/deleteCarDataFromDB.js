@@ -1,17 +1,17 @@
 const { ObjectId } = require("mongodb");
 const { getDB } = require("../../../../database/connectDatabase");
 
-const getSingleCarDetails = async (req, res) => {
+const deleteCarDataFromDB = async (req, res) => {
   try {
     const database = getDB();
-    const carsCollection = database.collection("cars");
+    const carCollection = database.collection("cars");
     const id = req.params.id;
     const query = { _id: new ObjectId(id) };
-    const result = await carsCollection.findOne(query);
+    const result = await carCollection.deleteOne(query);
     res.send(result);
   } catch (error) {
     res.send({ error: true, message: error.message });
   }
 };
 
-module.exports = getSingleCarDetails;
+module.exports = deleteCarDataFromDB;
