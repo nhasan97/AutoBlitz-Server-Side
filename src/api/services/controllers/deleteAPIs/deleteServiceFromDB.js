@@ -1,12 +1,13 @@
 const { ObjectId } = require("mongodb");
 const { getDB } = require("../../../../database/connectDatabase");
 
-const deleteCarSpecsFromDB = async (req, res) => {
+const deleteServiceFromDB = async (req, res) => {
   try {
     const database = getDB();
-    const carCollection = database.collection("carDetails");
-    const name = req.params.name;
-    const query = { name: name };
+    const carCollection = database.collection("services");
+    const id = req.params._id;
+    console.log(id);
+    const query = { _id: new ObjectId(id) };
     const result = await carCollection.deleteOne(query);
     res.send(result);
   } catch (error) {
@@ -14,4 +15,4 @@ const deleteCarSpecsFromDB = async (req, res) => {
   }
 };
 
-module.exports = deleteCarSpecsFromDB;
+module.exports = deleteServiceFromDB;

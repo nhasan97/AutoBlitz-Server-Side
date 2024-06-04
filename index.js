@@ -11,7 +11,9 @@ const usersRoutes = require("./src/routes/users/index");
 const customerRoutes = require("./src/routes/customer/index");
 const brandRoutes = require("./src/routes/brands/index");
 const carsRoutes = require("./src/routes/cars/index");
+const servicesRoutes = require("./src/routes/services/index");
 const cartRoutes = require("./src/routes/cart/index");
+const paymentRoutes = require("./src/routes/payment/index");
 
 const globalErrorHandler = require("./src/middleWares/globalErrorHandler");
 
@@ -22,7 +24,9 @@ app.use(usersRoutes);
 app.use(customerRoutes);
 app.use(brandRoutes);
 app.use(carsRoutes);
+app.use(servicesRoutes);
 app.use(cartRoutes);
+app.use(paymentRoutes);
 
 app.get("/", (req, res) => {
   res.send("server started");

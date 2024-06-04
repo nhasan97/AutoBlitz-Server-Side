@@ -16,6 +16,17 @@ const updateCarInfo = async (req, res) => {
         description: req.body.description,
         rating: req.body.rating,
         imageUrl: req.body.imageUrl,
+        body: req.body.body,
+        seg: req.body.seg,
+        py: req.body.py,
+        eng: req.body.eng,
+        pow: req.body.pow,
+        fuel: req.body.fuel,
+        fuelc: req.body.fuelc,
+        ps: req.body.ps,
+        d: req.body.d,
+        ts: req.body.ts,
+        gw: req.body.gw,
       },
     };
 

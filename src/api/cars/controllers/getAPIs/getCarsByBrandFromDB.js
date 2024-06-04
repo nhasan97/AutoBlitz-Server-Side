@@ -7,7 +7,12 @@ const getCarsByBrandFromDB = async (req, res) => {
 
     let query = {};
     if (req.query?.brandName) {
-      query = { brandName: req.query.brandName.toLowerCase() };
+      query = {
+        brandName: {
+          $regex: req.query?.brandName,
+          $options: "i",
+        },
+      };
     }
 
     const cursor = carsCollection.find(query);
