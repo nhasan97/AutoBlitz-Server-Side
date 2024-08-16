@@ -16,8 +16,29 @@ const getCarsByBrandFromDB = async (req, res) => {
     }
 
     const cursor = carsCollection.find(query);
-    const result = await cursor.toArray();
-    res.send(result);
+    const cars = await cursor.toArray();
+
+    // Find min and max prices using aggregation
+    const priceStats = await carsCollection
+      .aggregate([
+        { $match: query }, // Match the brand name if provided
+        {
+          $group: {
+            _id: null,
+            maxPrice: { $max: "$price" },
+            minPrice: { $min: "$price" },
+          },
+        },
+      ])
+      .toArray();
+
+    // Extract the min and max prices
+    const { maxPrice, minPrice } = priceStats[0] || {
+      maxPrice: null,
+      minPrice: null,
+    };
+
+    res.send({ cars, maxPrice, minPrice });
   } catch (error) {
     res.send({ error: true, message: error.message });
   }

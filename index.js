@@ -1,5 +1,5 @@
 const express = require("express");
-const applyMiddleware = require("./src/middleWares/applyMiddlewares");
+const applyMiddleware = require("./src/middlewares/applyMiddlewares");
 const { connectDatabase } = require("./src/database/connectDatabase");
 require("dotenv").config();
 
@@ -14,6 +14,8 @@ const carsRoutes = require("./src/routes/cars/index");
 const servicesRoutes = require("./src/routes/services/index");
 const cartRoutes = require("./src/routes/cart/index");
 const paymentRoutes = require("./src/routes/payment/index");
+const ordersRoutes = require("./src/routes/orders/index");
+const serviceListRoutes = require("./src/routes/serviceList/index");
 
 const globalErrorHandler = require("./src/middleWares/globalErrorHandler");
 
@@ -27,6 +29,8 @@ app.use(carsRoutes);
 app.use(servicesRoutes);
 app.use(cartRoutes);
 app.use(paymentRoutes);
+app.use(ordersRoutes);
+app.use(serviceListRoutes);
 
 app.get("/", (req, res) => {
   res.send("server started");

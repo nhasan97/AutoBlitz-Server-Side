@@ -1,10 +1,18 @@
 const { getDB } = require("../../../../database/connectDatabase");
 
-const getPaymentDataFromDb = async (req, res) => {
+const getOrdersFromDB = async (req, res) => {
   try {
     const database = getDB();
     const paymentCollection = database.collection("payments");
-    const cursor = paymentCollection.find();
+
+    let query = {};
+    if (req.query?.email) {
+      query = {
+        email: req.query?.email,
+      };
+    }
+
+    const cursor = paymentCollection.find(query);
     const result = await cursor.toArray();
     res.send(result);
   } catch (error) {
@@ -12,4 +20,4 @@ const getPaymentDataFromDb = async (req, res) => {
   }
 };
 
-module.exports = getPaymentDataFromDb;
+module.exports = getOrdersFromDB;
